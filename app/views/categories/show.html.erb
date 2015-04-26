@@ -1,0 +1,22 @@
+<% all_posts = link_to('All Posts', posts_path) %>
+<%= render 'shared/title', title: "#{all_posts} &raquo; #{@category.name}".html_safe %>
+<% @category.posts.each do |post| %>
+<div class='well'>
+  <% post.categories.each do |category| %>
+  <%= render 'category', category: category%>
+  <%end%>
+
+  <p>
+    <h4><%=link_to post.title,post_path(post) %></h4>
+  </p>
+  <p>
+    <p><%=post.description%></p>
+  </p>  
+  <p>
+    <p><span class='quiet'>Created By </span><%=post.user.username%> at <%=post.created_at%></p>
+  </p>  
+  <p>
+    <%= link_to("#{post.comments.size} comments",post_path(post)) %> 
+  </p>  
+</div>
+<%end%>

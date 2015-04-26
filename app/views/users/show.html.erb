@@ -1,0 +1,45 @@
+<%= render 'shared/title', title: "#{current_user.username}'s Account" %>
+
+<div class='well'>
+  <p><b>Username: </b> <%= current_user.username %></p>
+  <p><b>Email: </b> <%= current_user.email %></p>
+</div>
+
+<ul class='nav nav-tabs'>
+  <li class="<%= 'active' if params[:tab] == nil %>">
+    <%= link_to "Posts (#{current_user.posts.size})", user_path(current_user.id) %>
+  </li>
+  <li class="<%='active' if params[:tab] == 'comments' %>">
+    <%= link_to "Comments (#{current_user.comments.size})", user_path(current_user.id, tab: 'comments') %>
+  </li>
+</ul>
+
+<% if params[:tab] == nil %>
+<% current_user.posts.each do |post| %>
+<div class='well'>
+  <% post.categories.each do |category| %>
+  <%= render '/categories/category', category: category%>
+  <%end%>
+        <div class='well span0 vote'>
+      <% if logged_in? %><%= link_to 'up', vote_post_path(post.id,vote: true), method: 'post'%><% end %><br>
+      <%= post.votes_total %><br>
+      <% if logged_in? %><%= link_to 'down', vote_post_path(post.id,vote: false), method: 'post'%><% end %>
+    </div>
+  <p>
+    <h4><%=link_to post.title,post_path(post) %></h4>
+  </p>
+  <p>
+    <p><%=post.description%></p>
+  </p>  
+  <p>
+    <p><span class='quiet'>Created By </span><%=post.user.username%> at <%=post.created_at%></p>
+  </p>  
+  <p>
+    <%= link_to("#{post.comments.size} comments",post_path(post)) %> 
+  </p>  
+</div>
+<%end%>
+
+<% elsif params[:tab] == "comments" %>
+<%= render '/shared/comments' %>
+<% end %>

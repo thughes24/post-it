@@ -1,0 +1,24 @@
+<% @posts.each do |post| %>
+<div class='well span0 text-center'>
+      <% if logged_in? %><%= link_to 'up', vote_post_path(post.id,vote: true), method: 'post'%><% end %><br>
+      <%= post.votes_total %><br>
+      <% if logged_in? %><%= link_to 'down', vote_post_path(post.id,vote: false), method: 'post'%><% end %>
+</div>
+<div class='well'>
+  <% post.categories.each do |category| %>
+  <%= render '/categories/category', category: category%>
+  <%end%>
+  <p>
+    <h4><%=link_to post.title,post_path(post) %></h4>
+  </p>
+  <p>
+    <p><%=post.description%></p>
+  </p>  
+  <p>
+    <p><span class='quiet'>Created By </span><%=post.user.username%> at <%=post.created_at%></p>
+  </p>  
+  <p>
+    <%= link_to("#{post.comments.size} comments",post_path(post)) %> 
+  </p>  
+</div>
+<%end%>

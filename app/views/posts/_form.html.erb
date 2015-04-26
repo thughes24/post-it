@@ -1,0 +1,16 @@
+<%= render '/shared/errors', error: @post %>
+<% if @comment%>
+<%= render '/shared/errors', error: @comment %>
+<% end %>
+<div class='well form-inline'>
+<%= form_for @post do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+  <%= f.label :description %>
+  <%= f.text_area :description %>
+  <%= f.collection_check_boxes :category_ids, Category.all, :id, :name do |cb| %>
+    <% cb.label(class: "checkbox inline") {cb.check_box(class: "checkbox-inline") + cb.text } %>
+  <% end %>
+  <%= f.submit 'Create Post', class: 'btn btn-primary' %>
+<% end %>
+</div>

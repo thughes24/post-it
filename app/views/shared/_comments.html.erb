@@ -1,0 +1,13 @@
+<% current_user.comments.each do |comment| %>
+    <div class='well span0 vote'>
+      <% if logged_in? %><%= link_to 'up', vote_post_comment_path(comment.post.id,comment.id,vote: true), method: 'post'%><% end %><br>
+      <%= comment.votes_total %><br>
+      <% if logged_in? %><%= link_to 'down', vote_post_comment_path(comment.post.id,comment.id,vote: false), method: 'post'%><% end %>
+    </div>
+
+<% if comment.body.length != 0 %>
+  <div class='well'>
+    <p><%=comment.body%><br>on <%=comment.post.title %> <br>at <%=comment.created_at%></p>
+  </div>
+  <% end %>
+  <% end %>

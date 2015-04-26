@@ -1,0 +1,6 @@
+<% current_user.comments.each do |comment| %>
+<% if comment.body.length != 0 %>
+  <div class='well'>
+    <p><%=comment.body%><br>on <%=comment.post.title %> <br>at <%=comment.created_at%></p>
+  </div>
+  <% end %>
