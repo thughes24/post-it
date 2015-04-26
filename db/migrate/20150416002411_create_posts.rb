@@ -4,7 +4,7 @@ class CreatePosts < ActiveRecord::Migration
       t.string :url
       t.string :title
       t.text :description
-      t.timestamp null: false
+      t.timestamps
     end
   end
 end
